@@ -1,0 +1,110 @@
+{pragma test}
+/* this is C/Ed3-style
+	block comment */
+//and line comment
+(* tradtional-style
+	comment *)
+{ multiline
+	pragma test }
+
+program program_type1
+	var_external
+		variable1 : bool;
+	end_var
+	var
+		s1 : string;
+		s2 : wstring;
+		s3 : float := 1.1e-3;
+		s4 : dword;
+	end_var
+	s1 := '$thel$'lo';
+	s1 := 'hel"lo2$ffab.'; //should highlight only $ff, not ffab
+	s2 := "he'llo2";
+	s2 := "hel$"lo2$ffff123";
+	variable1 := false;
+	s3 := float#10;
+	s4 := 0001_1010;
+	s4 := 16#abcd_ef12_3456_7890 ;
+end_program
+
+FUNCTION int_to_string : string
+	var_input
+		in0 : int;
+	end_var
+	var
+		i, n, l : int;
+		chars, s, result : string; //TODO declare with length
+	end_var
+	chars := '0123456789';
+	n := in0;
+	if n < 0 then // check sign
+		n := -n; // make n positive
+		result := '-';
+	end_if;
+	repeat // generate digits in reverse order
+		s := concat(
+			in1 := s,
+			in2 := MID(IN:=chars , L:=int#1, P := 1 + (n mod int#10) ) //1-based indexing!!!
+		);
+		l := l + 1;
+		n := n / 10;
+	until n = 0 end_repeat; // delete it
+	FOR i := 0 TO l
+	DO
+		result := concat(
+			in1 := result,
+			in2 := MID(IN:=s, L:=int#1, P := l - i)
+		);
+	END_FOR ;
+	int_to_string := result;
+END_FUNCTION
+
+function_block sensor_filter
+	var_input
+		in : int ;
+	end_var
+	var_output
+		out : int ;
+	end_var
+	var
+		d : array [0..3] of int ;
+		index : int ;
+		k : int := 1 ;
+	end_var
+	d[index] := in ;
+	index := index + 1 ;
+	if index > 3 then
+		index := 0 ;
+	end_if ;
+	if k < 4 then
+		k := k + 1 ;
+	end_if ;
+	out := ( d[0] + d[1] + d[2] + d[3] ) / k ;
+end_function_block
+
+configuration test_config
+
+	var_global //globals
+		variable1 : bool := true;
+		variable2 : int := 1;
+		variable3 : TON ;
+
+		variable4 at %ix1.1 : bool;
+
+	end_var
+
+	task task1 ( interval := T#20.0ms, priority := 100 );
+
+
+	program program_type1 with task1 : program_1_instance_1;
+//TODO program with arguments
+
+	var_access
+		variable_access_1 : variable1 : bool;
+		variable_access_2 : variable2 : bool read_write;
+		variable_access_3 : variable4 : bool read_only;
+//TODO located
+	end_var
+
+end_configuration
+
