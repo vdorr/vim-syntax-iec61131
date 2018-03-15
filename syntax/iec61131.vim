@@ -13,22 +13,24 @@ syn case ignore
 syn sync lines=250
 
 syn keyword iecBoolean	true false
-syn keyword iecConditional	if else then end_if
+syn keyword iecConditional	if elsif else then end_if
 syn keyword iecConstant	null
 syn keyword iecLabel		case end_case return jmp jmpc jmpcn
-syn keyword iecOperator	and or xor not div mod
-syn keyword iecRepeat	for do repeat while to until end_for end_while end_repeat by exit continue
+syn keyword iecOperator	and or xor not mod
+syn keyword iecRepeat	for do from repeat while to until end_for end_while end_repeat by exit continue
 
 syn keyword iecStatement	function end_function
 syn keyword iecStatement	function_block end_function_block
-syn keyword iecStatement	program end_program
+syn keyword iecStatement	program end_program 
 
 syn keyword iecStruct	struct end_struct
-syn keyword iecKeyword	configuration end_configuration var_access var_external var_input var_output var_in_out var end_var
+syn keyword iecKeyword	configuration end_configuration resource on end_resource
+
+syn keyword iecKeyword	var_global var_access var_external var_input var_output var_in_out var end_var var_temp var_config
 
 syn keyword iecKeyword read_write read_only
 
-syn keyword iecStorageClass	at const retain non_retain
+syn keyword iecStorageClass	at constant retain non_retain
 
 "TODO maybe should be restricted to configuration, check if all are keywords
 syn keyword iecKeyword task with priority interval single
@@ -36,9 +38,23 @@ syn keyword iecKeyword task with priority interval single
 syn keyword iecKeyword array of
 syn keyword iecType  bool int uint usint string wstring float word dword
 
+syn keyword iecKeyword type end_type struct overlap end_struct ref_to
+syn keyword iecKeyword ref this
+
+syn keyword iecKeyword final abstract extends implements override method end_method super
+syn keyword iecKeyword class end_class interface end_interface public protected private internal
+
+syn keyword iecKeyword initial_step end_step step transition priority end_transition action end_action
+syn keyword iecKeyword namespace end_namespace using 
+
+" ------------------------------------------------------------------------------
+
 syn keyword iecType ton tof sr rs
+syn keyword iecType r_edge f_edge
 
 syntax match iecTypePrefix "t\#"
+
+" ------------------------------------------------------------------------------
 
 syntax region  iecString	contains=@Spell,iecEscape,iecEscWide start=+"+ skip=+""+ end=+"+ 
 syntax region  iecString	contains=@Spell,iecEscape,iecEscShort start=+'+ skip=+''+ end=+'+ 
