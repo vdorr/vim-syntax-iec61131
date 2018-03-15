@@ -70,7 +70,6 @@ syn keyword iecTodo contained	TODO FIXME XXX DEBUG NOTE
 
 
 syntax match   iecNumber		"\<\d[0-9_]*\(\.\d[0-9_]*\)\=\([Ee][+-]\=\d[0-9_]*\)\=\>"
-"syntax match   iecNumber		"\<\d\d\=#\x[0-9A-Fa-f_]*\(\.\x[0-9A-Fa-f_]*\)\=#\([Ee][+-]\=\d[0-9_]*\)\="
 syntax match   iecNumber		"\<\d\d\=#\x[0-9A-Fa-f_]*\(\.\x[0-9A-Fa-f_]*\)\="
 
 highlight def link iecTypePrefix	Type
