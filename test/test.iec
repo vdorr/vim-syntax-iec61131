@@ -2,7 +2,7 @@
 /* this is C/Ed3-style
 	block comment */
 //and line comment
-(* tradtional-style
+(* traditional-style
 	comment *)
 { multiline
 	pragma test }
@@ -16,8 +16,16 @@ program program_type1
 		s2 : wstring;
 		s3 : float := 1.1e-3;
 		s4 : dword;
+		s5 : time;
+
+		s6 : date;
+		s7 : LDATE;
+		s8 : TIME_OF_DAY;
+		s9 : LTIME_OF_DAY;
+		s10 : DATE_AND_TIME;
+		s11 : LDATE_AND_TIME;
 	end_var
-	s1 := '$thel$'lo';
+	s1 := string#'$thel$'lo';
 	s1 := 'hel"lo2$ffab.'; //should highlight only $ff, not ffab
 	s2 := "he'llo2";
 	s2 := "hel$"lo2$ffff123";
@@ -25,6 +33,38 @@ program program_type1
 	s3 := float#10;
 	s4 := 0001_1010;
 	s4 := 16#abcd_ef12_3456_7890 ;
+	s4 := 16#FF ;
+
+	s5 := TIME#18ms ;
+	s5 := LT#24.8s;
+	s5 := t#27h16m;
+	s5 := TIME#-19ms;
+	s5 := T#11.9m;
+	s5 := time#11.9s;
+	s5 := t#27h16m;
+	s5 := time#5d_10h_17m_19s_4.1ms;
+	s5 := t#25h15m+t#1s;
+
+	s6 := DATE#1990-07-19;
+	s6 := date#2011-01-30;
+	s6 := D#1985-07-09;
+
+	s7 := LDATE#2011-01-30;
+	s7 := LD#1990-07-19;
+
+	s8 := TIME_OF_DAY#17:48:45.17;
+	s8 := TOD#10:43:47.26;
+
+	s9 := LTOD#22:26:42.38
+	s9 := LTIME_OF_DAY#10:26:36.43
+
+	s10 := DATE_AND_TIME#1951-04-29-10:45:39.15102243;
+	s10 := DT#1985-05-15-11:30:51.240_001_020;
+
+	s11 := LDATE_AND_TIME#2000-14-19-20:25:51.240_024_101;
+	s11 := LDT#1985-05-15-11:30:51.240_001_020;
+
+	s1 := string#'xx$fxx';//TODO wrong escape sequence
 end_program
 
 FUNCTION int_to_string : string

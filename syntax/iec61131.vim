@@ -8,9 +8,10 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-
 syn case ignore
 syn sync lines=250
+
+" ------------------------------------------------------------------------------
 
 syn keyword iecBoolean	true false
 syn keyword iecConditional	if elsif else then end_if
@@ -49,12 +50,34 @@ syn keyword iecKeyword namespace end_namespace using
 
 " ------------------------------------------------------------------------------
 
+syntax region iecTimeLit contains=iecTimePrefix,iecTimeComp,iecTimeUnit
+  \ start="t#\|time#\|lt#\|ltime#"
+  \ end="\>"
+
+syntax match iecTimePrefix contained "t#\|time#\|lt#\|ltime#"
+syntax match iecTimeComp contained "\(\d[0-9_]*\)\(\.\d[0-9_]*\)\=_\="
+syn match iecTimeUnit contained "d\|h\|s\|ms\|m\|us\|ns"
+
+" ------------------------------------------------------------------------------
+
+syntax region iecDateLit contains=iecDatePrefix,iecDateComp
+  \ start="ltime_of_day#\|time_of_day#\|ldt#\|tod#\|ltod#\|dt#\|ld#\|d#\|date_and_time#\|date#\|ld#\|ldate_and_time#\|ldate#"
+  \ end="\>"
+
+syntax match iecDatePrefix contained "ltime_of_day#\|time_of_day#\|ldt#\|tod#\|ltod#\|dt#\|ld#\|d#\|date_and_time#\|date#\|ld#\|ldate_and_time#\|ldate#"
+syntax match iecDateComp contained "\(\d[0-9_]*\)\(\.\d[0-9_]*\)\=[\-\:]\="
+"-\=
+
+" ------------------------------------------------------------------------------
+
 syn keyword iecType ton tof sr rs
 syn keyword iecType r_edge f_edge
 
-syntax match iecTypePrefix "t\#"
+syntax match iecTypePrefix "\<^\(t#\|time#\|lt#\|ltime#\)[a-z]*[0-9a-z_]*\#"
 
 " ------------------------------------------------------------------------------
+
+" TODO highlight errorneous string escapes
 
 syntax region  iecString	contains=@Spell,iecEscape,iecEscWide start=+"+ skip=+""+ end=+"+ 
 syntax region  iecString	contains=@Spell,iecEscape,iecEscShort start=+'+ skip=+''+ end=+'+ 
@@ -66,27 +89,28 @@ syntax match iecEscShort contained "\$\'"
 syntax match iecEscWide contained "\$\x\x\x\x"
 syntax match iecEscWide contained "\$\""
 
-syntax region  iecComment 
-    \ oneline 
-    \ contains=@Spell,iecTodo
-    \ start="//" 
-    \ end="$"
+" ------------------------------------------------------------------------------
 
-
-syntax region  iecComment 
-    \ contains=@Spell,iecTodo
-    \ start="/\*"
-    \ end="\*/"
-
-syntax region  iecComment  contains=@Spell,iecTodo start="(\*" end="\*)"
+syntax region iecComment oneline contains=@Spell,iecTodo start="//" end="$"
+syntax region iecComment contains=@Spell,iecTodo start="/\*" end="\*/"
+syntax region iecComment contains=@Spell,iecTodo start="(\*" end="\*)"
 
 syntax region  iecPreproc start="{" end="}"
 
-syn keyword iecTodo contained	TODO FIXME XXX DEBUG NOTE
+syn keyword iecTodo contained TODO FIXME XXX DEBUG NOTE
 
+" ------------------------------------------------------------------------------
 
 syntax match   iecNumber		"\<\d[0-9_]*\(\.\d[0-9_]*\)\=\([Ee][+-]\=\d[0-9_]*\)\=\>"
-syntax match   iecNumber		"\<\d\d\=#\x[0-9A-Fa-f_]*\(\.\x[0-9A-Fa-f_]*\)\="
+syntax match   iecNumber		"\<\d\d\=#\x[0-9a-f_]*\(\.\x[0-9a-f_]*\)\="
+
+"highlight def link iecTimeLit		Number
+highlight def link iecTimePrefix	Type
+highlight def link iecTimeComp		Number
+highlight def link iecTimeUnit		Special
+
+highlight def link iecDatePrefix	Type
+highlight def link iecDateComp          Number
 
 highlight def link iecTypePrefix	Type
 
