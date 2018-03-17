@@ -37,7 +37,6 @@ syn keyword iecStorageClass	at constant retain non_retain
 syn keyword iecKeyword task with priority interval single
 
 syn keyword iecKeyword array of
-syn keyword iecType  bool int uint usint string wstring float word dword
 
 syn keyword iecKeyword type end_type struct overlap end_struct ref_to
 syn keyword iecKeyword ref this
@@ -73,7 +72,15 @@ syntax match iecDateComp contained "\(\d[0-9_]*\)\(\.\d[0-9_]*\)\=[\-\:]\="
 syn keyword iecType ton tof sr rs
 syn keyword iecType r_edge f_edge
 
-syntax match iecTypePrefix "\<^\(t#\|time#\|lt#\|ltime#\)[a-z]*[0-9a-z_]*\#"
+"syntax match iecTypePrefix "\<^\(t#\|time#\|lt#\|ltime#\)[a-z]*[0-9a-z_]*\#"
+
+" ------------------------------------------------------------------------------
+
+syn keyword iecType sint int dint lint usint uint udint ulint
+syn keyword iecType real lreal
+syn keyword iecType bool byte word dword lword
+syn match iecType "\(time\|ltime\|date\|ldate\|time_of_day\|tod\|ltime_of_day\|ltod\|date_and_time\|dt\|ldate_and_time\|ldt\)\>[^#]"
+syn keyword iecType string wstring char wchar
 
 " ------------------------------------------------------------------------------
 

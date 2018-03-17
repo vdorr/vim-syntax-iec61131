@@ -14,7 +14,7 @@ program program_type1
 	var
 		s1 : string;
 		s2 : wstring;
-		s3 : float := 1.1e-3;
+		s3 : real := 1.1e-3;
 		s4 : dword;
 		s5 : time;
 
@@ -30,7 +30,7 @@ program program_type1
 	s2 := "he'llo2";
 	s2 := "hel$"lo2$ffff123";
 	variable1 := false;
-	s3 := float#10;
+	s3 := real#10;
 	s4 := 0001_1010;
 	s4 := 16#abcd_ef12_3456_7890 ;
 	s4 := 16#FF ;
